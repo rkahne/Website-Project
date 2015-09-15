@@ -10,38 +10,42 @@
         var uniqueSubredditsCount = [];
         var subredditObjects = [];
         var sortedSubredditObjects = [];
-        var htmlString = "<ul>"
-        $.get('https://www.reddit.com/search.json?q=Bernie+Sanders&count=1000&limit=1000').success(function(responseData){
-            r=responseData.data.children;
-            for(i = 0; i<r.length; i++){
-                subreddits.push(r[i].data.subreddit);
-            }
-            uniqueSubreddits = _.uniq(subreddits);
-            for(i=0;i<uniqueSubreddits.length;i++){
-                uniqueSubredditsCount[i]=0;
-                for(j=0;j<subreddits.length;j++){
-                    if(uniqueSubreddits[i]==subreddits[j]){
-                        uniqueSubredditsCount[i]++;
+        var htmlString = "<ul>";
+        var getSubreddits = function(searchTerm){
+                $.get('https://www.reddit.com/search.json?q="'+searchTerm+'"&count=1000&limit=1000').success(function(responseData){
+                    r=responseData.data.children;
+                    for(i = 0; i<r.length; i++){
+                     subreddits.push(r[i].data.subreddit);
                     }
-                } //end 'j' for loop
-                subredditObjects.push({
-                    name: uniqueSubreddits[i],
-                    count: uniqueSubredditsCount[i]
-                }); // end Object array push
-            } // end 'i' for loop
-            sortedSubredditObjects = _.sortBy(subredditObjects,'count').reverse();
-            for(i = 0; i<sortedSubredditObjects.length; i++){
-                htmlString+="<li>"+sortedSubredditObjects[i].name+": "+sortedSubredditObjects[i].count+"</li>";
-            }
-            htmlString+="</ul>"
-        }); // end AJAX callback.
-        $("div.inner").replaceWith(htmlString);
+                    uniqueSubreddits = _.uniq(subreddits);
+                    for(i=0;i<uniqueSubreddits.length;i++){
+                        uniqueSubredditsCount[i]=0;
+                        for(j=0;j<subreddits.length;j++){
+                          if(uniqueSubreddits[i]==subreddits[j]){
+                            uniqueSubredditsCount[i]++;
+                            }
+                        } //end 'j' for loop
+                        subredditObjects.push({
+                            name: uniqueSubreddits[i],
+                            count: uniqueSubredditsCount[i]
+                         }); // end Object array push
+                    } // end 'i' for loop
+                    sortedSubredditObjects = _.sortBy(subredditObjects,'count').reverse();
+                    for(i = 0; i<sortedSubredditObjects.length; i++){
+                     htmlString+="<li>"+sortedSubredditObjects[i].name+": "+sortedSubredditObjects[i].count+"</li>";
+                    }
+                    htmlString+="</ul>"
+                }); // end AJAX callback.
+            return htmlString;    
+        };
+        $("document").ready(function(){
+            var stringOfHtml = getSubreddits("Rifle+Paper+Company"); 
+            $(".container").html(stringOfHtml);
+        }); //end ready
     </script>
 </head>
 <body>
     <div class="container">
-        <div class="inner">
-        </div>
     </div>
 </body>
 </html>

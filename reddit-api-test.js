@@ -109,7 +109,7 @@ var addAuthors = function(searchText){
         } // end 'i' for loop
         sortedAuthorObjects = _.sortBy(authorObjects,'count').reverse();
         for(i = 0; i<sortedAuthorObjects.length; i++){
-            htmlString+="<a href=http://www.reddit.com/u/"+sortedAuthorObjects[i].usename+" class=list-group-item><span class=badge>"+sortedAuthorObjects[i].count+"</span>"+sortedAuthorObjects[i].username+"</a>";
+            htmlString+="<a href=http://www.reddit.com/u/"+sortedAuthorObjects[i].username+" class=list-group-item><span class=badge>"+sortedAuthorObjects[i].count+"</span>"+sortedAuthorObjects[i].username+"</a>";
         }
         htmlString+="</ul></div>"
         $(".authorList").html(htmlString);  

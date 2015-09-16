@@ -1,4 +1,5 @@
-var getSubreddits = function(searchTerm){
+//var getSubreddits = function(searchTerm){
+$("document").ready(function(){   
     var r;
     var subreddits = [];
     var uniqueSubreddits = [];
@@ -6,7 +7,13 @@ var getSubreddits = function(searchTerm){
     var subredditObjects = [];
     var sortedSubredditObjects = [];
     var htmlString = "<ul>";
-    var request = $.get('https://www.reddit.com/search.json?q=%22'+searchTerm+'%22&count=1000&limit=1000').success(function(responseData){
+    var searchTerm="Coffee"
+    var qString = {
+        q:searchTerm,
+        count: 1000,
+        limit: 1000
+        };      
+    $.get('https://www.reddit.com/search.json',qString).success(function(responseData){
         r=responseData.data.children;
         for(i = 0; i<r.length; i++){
             subreddits.push(r[i].data.subreddit);
@@ -28,10 +35,7 @@ var getSubreddits = function(searchTerm){
         for(i = 0; i<sortedSubredditObjects.length; i++){
             htmlString+="<li>"+sortedSubredditObjects[i].name+": "+sortedSubredditObjects[i].count+"</li>";
         }
-        htmlString+="</ul>"  
+        htmlString+="</ul>"
+        $(".container").html(htmlString);  
     }); // end AJAX callback.
-    return htmlString;;  
-};
-$("document").ready(function(){   
-    $(".container").html(getSubreddits("Rifle+Paper+Company"));
 }); //end ready

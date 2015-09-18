@@ -1,40 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Username's Shares</title>
-	<link href='http://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" type="text/css" href="content-aggregator.css">
+	<title>Shares</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript">
+    	$("document").ready(function(){  
+			$("#twitter").click(function(){
+				$.get({
+					url: "https://api.twitter.com/oauth/authorize",
+					data: "oauth_token=13332732-fetvSVLHreuBMi9tnDmag8trw2W85hRylYUNS1EyP",
+					success: function(data){
+						console.log(data);
+					},
+				})
+				/*$.get({
+					url: "https://api.twitter.com/1.1/statuses/user_timeline.json",
+					data: "screen_name=twitterapi&count=2"
+					success: function(data){
+						console.log(data);
+					},
+					dataType:'jsonp' ,
+				});*/
+			});
+		});
+	</script>
 </head>
 <body>
-<buton type="button" id="twitter">Twitter</button>
-
-
-
-
-
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-
-
-
-
-
-<script type="text/javascript">
-
-$("#twitter").click(function(){
-	$.ajax({
-		type: "POST",
-		url: "https://api.twitter.com/oauth/request_token",
-		success: function(data){
-			console.log(data);
-		},
-		dataType:'jsonp' ,
-	});
-});
-</script>
+	<buton type="button" id="twitter" class="btn btn-default">Twitter</button>
 </body>
 </html>
  
